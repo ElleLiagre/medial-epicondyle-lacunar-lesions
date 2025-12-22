@@ -1,5 +1,5 @@
 ############################################################################
-# Title: Microtrauma at the Humeral Medial Epicondyle - Reliability Study
+# Title: Microtrauma at the Humeral Medial Epicondyle - Screening Protocol Application
 #
 # Author: Elle B. K. Liagre
 # Email: elle.liagre@u-bordeaux.fr
@@ -358,4 +358,5 @@ df$Screened <- ifelse(df$in_buffer == TRUE & df$Filter_depth == 1, 1, 0)
 ## Save results to Excel
 output_file <- file.path(wd, "screening_results.xlsx")
 write.xlsx(df, file = output_file, rowNames = FALSE)
+
 
