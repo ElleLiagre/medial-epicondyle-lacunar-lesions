@@ -340,9 +340,13 @@ points_mat <- as.matrix(df[, c("centroid_x_norm",
                                "centroid_z_norm")])
 
 
+# Recompute convex hull
+buffer_vertices <- buffer$p
+buffer_hull <- convhulln(buffer_vertices)
+
+
 # Check if points are inside buffer
 df$in_buffer <- inhulln(buffer, points_mat)
-
 
 
 ## Depth filtering
@@ -358,5 +362,6 @@ df$Screened <- ifelse(df$in_buffer == TRUE & df$Filter_depth == 1, 1, 0)
 ## Save results to Excel
 output_file <- file.path(wd, "screening_results.xlsx")
 write.xlsx(df, file = output_file, rowNames = FALSE)
+
 
 
