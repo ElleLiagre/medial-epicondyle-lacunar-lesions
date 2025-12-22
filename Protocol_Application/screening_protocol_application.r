@@ -7,8 +7,23 @@
 # Date: 2025-12-18
 #
 # Description:
-#    Application of the established screening protocol to a new dataset of
-#    cropped humeral medial epicondyle 3D meshes.
+#    This script applies a validated two-stage screening protocol to identify
+#    microtrauma lesions on humeral medial epicondyle 3D surface meshes.
+#    
+#    The protocol combines:
+#      1. Spatial filtering: Tests whether surface centroids fall within a 
+#         predefined anatomical region of interest (buffered convex hull)
+#      2. Depth-based classification: Applies a 0.58mm depth threshold to
+#         distinguish true lesions from other surface features
+#    
+#    Surfaces passing both filters are classified as potential microtrauma lesions.
+#    
+#    Protocol development and validation are documented in the companion script
+#    'screening_protocol_dev.R'. The pre-computed spatial filter (buffer_mesh_hull)
+#    is loaded directly from the GitHub repository.
+#
+#    This script is designed for application to new datasets after the protocol
+#    has been established and validated.
 #
 # Requirements:
 #    - R (>= 4.3.2)
@@ -343,3 +358,4 @@ df$Screened <- ifelse(df$in_buffer == TRUE & df$Filter_depth == 1, 1, 0)
 ## Save results to Excel
 output_file <- file.path(wd, "screening_results.xlsx")
 write.xlsx(df, file = output_file, rowNames = FALSE)
+
