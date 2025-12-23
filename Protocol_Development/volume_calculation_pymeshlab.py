@@ -15,7 +15,7 @@ Description:
     https://github.com/ElleLiagre/medial-epicondyle-lacunar-lesions
 
 Requirements: 
-    - Python 3.13+
+    - Python ( >= 3.13.2)
     - pymeshlab (>= 2023.12.post3) (https://doi.org/10.5281/zenodo.4438750)
 
     Install with: pip install pymeshlab
@@ -113,4 +113,5 @@ with open(output_csv, "w", newline="") as f:
             print(f"Error processing {ply_file}: {e}")
 
 print("Batch processing complete.")
+
 
