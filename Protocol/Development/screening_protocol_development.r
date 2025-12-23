@@ -460,7 +460,7 @@ aligned <- mapply(
 
 ### Size metrics
 
-## Compute depth metrics
+## Compute maximum depth
 surfaces_df$Depth <- sapply(aligned, compute_depth)
 surfaces_df$Depth <- as.numeric(surfaces_df$Depth)
 
