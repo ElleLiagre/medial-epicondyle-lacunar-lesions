@@ -469,6 +469,8 @@ surfaces_df$Depth <- as.numeric(surfaces_df$Depth)
 surfaces_df$area2d <- sapply(aligned, function(x) area2d(x))
 
 
+### Shape metrics
+
 ## Compute axis distances
 max_dist_df <- lapply(aligned, compute_max_distance_axes)
 surfaces_df$first_axis_dist <- sapply(max_dist_df, function(x) x$Max_Axis_1)
@@ -477,7 +479,7 @@ surfaces_df$Elongation <- surfaces_df$second_axis_dist / surfaces_df$first_axis_
 surfaces_df$Flatness <- surfaces_df$Depth / surfaces_df$first_axis_dist
 
 
-### Shape metrics
+### Surface metrics
 
 ## Surface roughness (as standard deviation of mean curvature)
 
