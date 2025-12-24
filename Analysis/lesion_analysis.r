@@ -21,6 +21,7 @@
 #    - GGally (>= 2.2.1)
 #    - Hmisc (>= 5.2.4)
 #    - openxlsx (>= 4.2.5.2)
+#    - reshape2 (>= 1.4.4)
 #    - Rvcg (>= 0.25)
 #    - tibble (>= 3.2.1)
 #    - vangogh (>= 0.1.2.)
@@ -52,6 +53,7 @@ library(FNN)
 library(GGally)
 library(Hmisc)
 library(openxlsx)
+library(reshape2)
 library(Rvcg)
 library(tibble)
 library(vangogh)
@@ -505,6 +507,7 @@ p_matrix <- cor_res$P
 
 print(round(cor_res$r, 2))
 
+                                   
 ## Visualize correlation matrix
 
 # Color palette
@@ -517,22 +520,72 @@ sig_labels <- ifelse(p_matrix < 0.001, "***",
                             ifelse(p_matrix < 0.05, "*", "")))
 sig_labels[is.na(sig_labels)] <- ""
 
-cor_melt <- reshape2::melt(cor_matrix)
-cor_melt$pval <- reshape2::melt(p_matrix)$value
-cor_melt$sig <- reshape2::melt(sig_labels)$value
+
+# Remove diagonal
+diag(cor_matrix) <- NA
+diag(p_matrix) <- NA
+diag(sig_labels) <- ""
 
 
-# Plot correlation matrix with significance
-matrix_sig <- ggplot(cor_melt, aes(Var1, Var2, fill = value)) +
-  geom_tile() +
-  geom_text(aes(label = paste0(formatC(value, format = "f", digits = 2), sig)), 
-            size = 3) +
+# Mask triangles
+cor_upper <- cor_matrix
+cor_upper[lower.tri(cor_upper)] <- NA
+
+p_lower <- p_matrix
+p_lower[upper.tri(p_lower)] <- NA 
+
+
+# Melt matrices
+cor_melt <- melt(cor_upper, na.rm = TRUE)
+p_melt <- melt(p_lower, na.rm = TRUE)
+sig_melt <- melt(sig_labels)
+
+
+# Combine for plotting
+plot_data <- merge(cor_melt, p_melt, by = c("Var1", "Var2"), all = TRUE)
+plot_data <- merge(plot_data, sig_melt, by = c("Var1", "Var2"), all = TRUE)
+names(plot_data) <- c("Var1", "Var2", "cor", "pval", "sig")
+
+
+# Replace NA stars by empty string
+plot_data$sig[is.na(plot_data$sig)] <- ""
+
+
+# Create labels
+plot_data$label <- ifelse(
+  !is.na(plot_data$cor),
+  paste0(
+    formatC(plot_data$cor, format = "f", digits = 2),
+    plot_data$sig            # stars ONLY here
+  ),
+  ifelse(
+    !is.na(plot_data$pval),
+    ifelse(
+      plot_data$pval < 0.001,
+      "<0.001",              # NO stars for p-values
+      formatC(plot_data$pval, format = "f", digits = 3)
+    ),
+    ""
+  )
+)
+
+
+# Reverse y-axis order
+plot_data$Var2 <- factor(
+  plot_data$Var2,
+  levels = rev(levels(plot_data$Var2))
+)
+
+
+# Plot
+matrix_sig <- ggplot(plot_data, aes(Var1, Var2, fill = cor)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = label), size = 3.5) +
   scale_fill_gradient2(low = pal[1], mid = "white", high = pal[5], midpoint = 0, 
-                       limits = c(-1, 1)) +
+                       limits = c(-1, 1), na.value = "grey80") +
   theme_bw() +
   labs(x = NULL, y = NULL, fill = "Correlation\ncoefficient") +
-  theme(
-    legend.title = element_text(margin = margin(b = 12)))
+  theme(legend.title = element_text(margin = margin(b = 12)))
 
 ggsave("corrmatrix_sign.png", plot = matrix_sig, path = wd, width = 10, height = 6)
 
@@ -555,3 +608,4 @@ writeData(wb, "Cor_matrix", cor_matrix)
 addWorksheet(wb, "p_matrix")
 writeData(wb, "p_matrix", p_matrix)
 saveWorkbook(wb, file = file.path(wd, "Results_metrics.xlsx"), overwrite = TRUE)
+
