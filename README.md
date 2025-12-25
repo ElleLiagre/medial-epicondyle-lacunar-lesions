@@ -3,7 +3,6 @@
 This repository contains all scripts and protocols used in the study "Microtrauma at the Humeral Medial Epicondyle: Quantifying Lacunar Lesions to Reconstruct Activity Patterns in Past Populations."
 
 <br> 
-<br>
 
 **Author and contact details**  
 Author &nbsp;&nbsp;&nbsp; *Elle B. K. Liagre*  
@@ -12,62 +11,57 @@ ORCID <span>&nbsp;&nbsp;&nbsp;</span>   *[https://orcid.org/0000-0002-8993-3266]
 
 <br>
 
----
 
-## Table of Contents
+**Table of Contents**
 
 - [Description](#description)
 - [Dependencies and libraries](#dependencies-and-libraries)
-- [How to Use](#how-to-use)
-- [Data Availability](#data-availability)
-- [Contributing](#contributing)
 - [License and Citation](#license-and-citation)
+
 <br>
 
 ---
 
 ## Description
 
-This project introduces a semi-automated, standardized 3D cropping protocol for analyzing the medial epicondyle of the human humerus, with a focus on its entheses. The protocol, implemented in **3DSlicer** using the **PyMeshLab** package and the **SlicerMorph** extensions, standardizes input models —such as mesh resolution and anatomical orientation—ensuring high repeatability and reproducibility in the analysis. Anatomical landmarks define the boundaries of the medial epicondyle, accounting for variations in humeral size, and ensuring consistent capture of the entire entheseal surface, even amidst anatomical variability.
+This project presents a novel 3D quantitative approach for analyzing lacunar lesions at the anterior medial collateral ligament attachment site on the humeral medial epicondyle. The methodology enables objective, reproducible assessment of skeletal microtrauma in archaeological populations.
 
-To improve efficiency, batch processing is incorporated, enabling the protocol to be applied to multiple humeral specimens in a streamlined manner. This feature is particularly beneficial for handling larger datasets, ensuring consistent results across specimens while minimizing manual intervention. The methodology enhances the accuracy and comparability of entheseal surface analysis, offering a valuable tool for studies on skeletal adaptations, physical activity, and human evolution, with strong potential for large-scale applications.
-
-This protocol is presented in the study by **Liagre EBK, Remy F, Villotte S, Knüsel CJ. A Standardized, Three-Dimensional Cropping Protocol for Analyzing the Medial Epicondyle of the Humerus. Am J Biol Anthropol. 2025 Aug;187(4):e70100. doi: 10.1002/ajpa.70100.** Methodological choices and further information can be found there.
-<br>
+This protocol is presented in the study by **Liagre EBK, Knüsel CJ, Villotte S. Microtrauma at the Humeral Medial Epicondyle: Quantifying Lacunar Lesions to Reconstruct Activity Patterns in Past Populations (under review).** Methodological choices and further information can be found there.
 <br>
 <br>
 
-## Repository Structure
+
+**Repository Structure**
 ```
 ├── Protocol/
 │   ├── Application/
-│   │   ├── extraction_application.py             # Python script for 3D surface extraction
+│   │   ├── extraction_protocol.py                # Python script for 3D surface extraction
 │   │   ├── screening_protocol_application.R      # R script for lesion screening
-│   │   └── buffer_mesh_hull.RDS                  # 
+│   │   └── buffer_mesh_hull.RDS                  # Buffer mesh used during lesion screening
 │   └── Development
-│       └── screening_protocol_development.R      # R script for developing the extraction protocol
+│       └── screening_protocol_development.R      # R script for developing the screening protocol
 ├── Analysis/
-│   ├── lesion_analysis.R                         # Statistical analysis of lesion morphology
-│   ├── reliability_study.R                       # Intra-observer reliability analysis
-│   └── volume_calculation.py                     # Python script for volume measurements
+│   ├── lesion_analysis.R                         # R script for statistical analysis of lesion morphology
+│   ├── reliability_study.R                       # R script for intra-observer reliability analysis
+│   └── volume_calculation.py                     # Python script for volume measurements of 3D meshes
+├── LICENSE
 └── README.md
 ```
-
-
-## Dependencies and libraries
-This project was built with the following software and library versions. Please ensure these dependencies are installed to maintain compatibility and ensure proper functionality of the protocol. Refer to the [How to Use](#how-to-use) section for installation steps.
-
-### Software and Extensions
-
-### Python Libraries
-- **PyMeshLab**: >= 2023.12.post2
-
-### Citations
-
-- Muntoni, A., & Cignoni, P. (2024). *PyMeshLab: PyMeshLab v2023.12.post2*. Zenodo. [doi: 10.5281/zenodo.13768931](https://doi.org/10.5281/zenodo.13768931)
 <br>
 
+## Dependencies and libraries
+This project was built with the following software and library versions. 
 
+**Software and Extensions**
+- R version (>= 4.3.2)
+  - Required R packages are mentioned in the individual scripts
+- Python (>= 3.13.2)
+  - PyMeshLab (>= 2023.12.post2)
+
+**Citations**
+
+- R Core Team. 2023. _R: A Language and Environment for Statistical Computing_. R Foundation for Statistical Computing, released. https://www.R-project.org/.
+- Muntoni, A., & Cignoni, P. (2024). *PyMeshLab: PyMeshLab v2023.12.post2*. Zenodo. [doi: 10.5281/zenodo.13768931](https://doi.org/10.5281/zenodo.13768931)
 <br>
 
 
@@ -75,4 +69,4 @@ This project was built with the following software and library versions. Please 
 
 This project is licensed under the GPL 3.0-License - see the [LICENSE](LICENSE) file for details.
 
-Please cite this repository as: Liagre, E.B.K. (2024). Medial Epicondyle Cropping Protocol. https://github.com/ElleLiagre/medial-epicondyle-cropping-protocol 
+Please cite this repository as: Liagre, E.B.K. (2025). Medial Epicondyle Lacunar Lesions. https://github.com/ElleLiagre/medial-epicondyle-lacunar-lesions 
