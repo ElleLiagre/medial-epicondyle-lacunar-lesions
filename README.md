@@ -26,7 +26,7 @@ ORCID <span>&nbsp;&nbsp;&nbsp;</span>   *[https://orcid.org/0000-0002-8993-3266]
 
 This project presents a novel 3D quantitative approach for analyzing lacunar lesions at the anterior medial collateral ligament attachment site on the humeral medial epicondyle. The methodology enables objective, reproducible assessment of skeletal microtrauma in archaeological populations.
 
-This protocol is presented in the study by **Liagre EBK, Knüsel CJ, Villotte S. Microtrauma at the Humeral Medial Epicondyle: Quantifying Lacunar Lesions to Reconstruct Activity Patterns in Past Populations (under review).** Methodological choices and further information can be found there.
+This protocol is presented in the study by **Liagre EBK, Knüsel CJ, Villotte S. Microtrauma at the Humeral Medial Epicondyle: Quantifying Lacunar Lesions to Reconstruct Activity Patterns in Past Populations (under review).** Further information can be found there.
 <br>
 <br>
 
@@ -52,11 +52,14 @@ This protocol is presented in the study by **Liagre EBK, Knüsel CJ, Villotte S.
 ## Dependencies and libraries
 This project was built with the following software and library versions. 
 
+<br>
+
 **Software and Extensions**
-- R version (>= 4.3.2)
+- R (>= 4.3.2)
   - Required R packages are mentioned in the individual scripts
 - Python (>= 3.13.2)
   - PyMeshLab (>= 2023.12.post2)
+<br>
 
 **Citations**
 
