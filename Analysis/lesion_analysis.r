@@ -364,7 +364,7 @@ metrics <- merge(metrics, vol_hull[,c("Name","Volume_hull")], by="Name", all.x =
 metrics$Solidity <- metrics$Volume / metrics$Volume_hull
 
 
-## Surface roughness (as standard deviation of mean curvature)
+## Surface roughness (as median absolute deviation of mean curvature)
 
 # Verify name matching
 normalize_surface_name <- function(x) {
@@ -413,10 +413,10 @@ surface_curv <- lapply(names(surfaces), function(name) {
 names(surface_curv) <- names(surfaces)
 
 
-# Calculate standard deviation of curvature for each surface
-metrics$meanvb_sd <- sapply(surface_curv, function(curv) {
+# Calculate median absolute deviation of curvature for each surface
+metrics$meanvb_mad <- sapply(surface_curv, function(curv) {
   if (all(is.na(curv))) return(NA)
-  sd(curv, na.rm = TRUE)
+  mad(curv, na.rm = TRUE)
 })
 
 
@@ -426,7 +426,7 @@ metrics$meanvb_sd <- sapply(surface_curv, function(curv) {
 
 pairs <- GGally::ggpairs(metrics %>% 
                   select(Depth, area2d, Volume, Sphericity, Elongation, Flatness,
-                         Solidity, meanvb_sd),
+                         Solidity, meanvb_mad),
                 aes(color = metrics$Sample, alpha = 0.7))
 
 print(pairs)
@@ -493,10 +493,10 @@ metrics_summary_rounded <- metrics_summary %>%
 ## Select numeric metrics for correlation analysis
 numeric_metrics <- metrics %>%
   select(Depth, area2d, Volume, Sphericity, Elongation, Flatness,
-         Solidity, meanvb_sd) %>%
+         Solidity, meanvb_mad) %>%
   rename(
     `2D Area` = area2d,
-    `Mean Curvature\nStandard Deviation` = meanvb_sd
+    `MAD of \nMean Curvature` = meanvb_mad
   )
 
 
@@ -608,4 +608,5 @@ writeData(wb, "Cor_matrix", cor_matrix)
 addWorksheet(wb, "p_matrix")
 writeData(wb, "p_matrix", p_matrix)
 saveWorkbook(wb, file = file.path(wd, "Results_metrics.xlsx"), overwrite = TRUE)
+
 
