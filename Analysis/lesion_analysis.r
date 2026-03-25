@@ -513,11 +513,12 @@ print(round(cor_res$r, 2))
 # Color palette
 pal <- vangogh_palette("SunflowersMunich")
 
+# Bonferroni-corrected significance thresholds
+n_comparisons <- sum(upper.tri(p_matrix))
+alpha <- 0.05 / n_comparisons                                   
 
 # Add significance stars
-sig_labels <- ifelse(p_matrix < 0.001, "***",
-                     ifelse(p_matrix < 0.01, "**",
-                            ifelse(p_matrix < 0.05, "*", "")))
+sig_labels <- ifelse(p_matrix < alpha, "*", "")
 sig_labels[is.na(sig_labels)] <- ""
 
 
